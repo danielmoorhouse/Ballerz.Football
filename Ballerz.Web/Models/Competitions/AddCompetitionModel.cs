@@ -1,8 +1,7 @@
-namespace Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data
+namespace Ballerz.Football.Ballerz.Web.Models.Competitions
 {
-    public class Competitions
+    public class AddCompetitionModel
     {
-        public int Id { get; set; }
         public int CountryId { get; set; }
         public int CompTypeId { get; set; }
         public string CompName { get; set; }

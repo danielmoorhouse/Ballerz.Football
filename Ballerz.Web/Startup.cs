@@ -14,6 +14,8 @@ using Ballerz.Football.Ballerz.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Ballerz.Football.Ballerz.Services;
+using Ballerz.Football.Ballerz.Services.Service.Implementations;
 
 namespace Ballerz.Football.Ballerz.Web
 {
@@ -45,6 +47,7 @@ namespace Ballerz.Football.Ballerz.Web
            .AddEntityFrameworkStores<ApplicationDbContext>()
            .AddDefaultUI()
            .AddDefaultTokenProviders();
+           services.AddScoped<ICountries, CountriesService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
