@@ -1,0 +1,55 @@
+@model IEnumerable<Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data.StadiumImages>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StadiumId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StadiumImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageCaption)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StadiumId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StadiumImageUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageCaption)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

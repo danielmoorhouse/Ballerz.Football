@@ -17,8 +17,12 @@ namespace Ballerz.Football.Ballerz.Web
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration((builderContext, config) => {
+                IHostingEnvironment env = builderContext.HostingEnvironment;
+               
+            })
                 .UseStartup<Startup>();
     }
 }
