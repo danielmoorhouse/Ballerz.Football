@@ -114,3 +114,8 @@
 /home/daniel/ASPProjects/Ballerz.Football/obj/Debug/netcoreapp2.2/Razor/Views/StadiumImages/Details.g.cshtml.cs
 /home/daniel/ASPProjects/Ballerz.Football/obj/Debug/netcoreapp2.2/Razor/Views/StadiumImages/Edit.g.cshtml.cs
 /home/daniel/ASPProjects/Ballerz.Football/obj/Debug/netcoreapp2.2/Razor/Views/StadiumImages/Index.g.cshtml.cs
+/home/daniel/ASPProjects/Ballerz.Football/obj/Debug/netcoreapp2.2/Razor/Views/ClubPerson/Create.g.cshtml.cs
+/home/daniel/ASPProjects/Ballerz.Football/obj/Debug/netcoreapp2.2/Razor/Views/ClubPerson/Delete.g.cshtml.cs
+/home/daniel/ASPProjects/Ballerz.Football/obj/Debug/netcoreapp2.2/Razor/Views/ClubPerson/Details.g.cshtml.cs
+/home/daniel/ASPProjects/Ballerz.Football/obj/Debug/netcoreapp2.2/Razor/Views/ClubPerson/Edit.g.cshtml.cs
+/home/daniel/ASPProjects/Ballerz.Football/obj/Debug/netcoreapp2.2/Razor/Views/ClubPerson/Index.g.cshtml.cs

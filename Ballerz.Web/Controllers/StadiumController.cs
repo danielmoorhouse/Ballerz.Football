@@ -7,23 +7,41 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Ballerz.Football.Ballerz.Data;
 using Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data;
+using Ballerz.Football.Ballerz.Services;
+using Ballerz.Football.Ballerz.Web.Models.Stadiums;
 
 namespace Ballerz.Football.Ballerz.Web.Controllers
 {
     public class StadiumController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _db;
+        private readonly IStadium _stadiumService;
 
-        public StadiumController(ApplicationDbContext context)
+        public StadiumController(ApplicationDbContext db)
         {
-            _context = context;
+            _db = db;
         }
 
         // GET: Stadium
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Stadiums.ToListAsync());
+               var stadiums  = (from s in _db.Stadiums
+                                     .OrderBy(p => p.StadiumName)
+                                    join t in _db.Clubs on s.HomeTeamId equals t.Id
+                                    join c in _db.Countries on s.CountryId equals c.Id
+                                    select new StadiumListingModel 
+                                    {
+                                        StadiumName = s.StadiumName,                                        
+                                        CountryFlag = c.FlagUrl,
+                                        StadiumImageUrl = s.StadiumImageUrl,
+                                        ClubBadgeUrl = t.TeamBadgeUrl
+                                       
+                                       
+                                    });
+                                    return View();
+
         }
+
 
         // GET: Stadium/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -33,12 +51,12 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
                 return NotFound();
             }
 
-            var stadium = await _context.Stadiums
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (stadium == null)
-            {
-                return NotFound();
-            }
+             var stadium = await _db.Stadiums
+                 .FirstOrDefaultAsync(m => m.Id == id);
+             if (stadium == null)
+             {
+                 return NotFound();
+             }
 
             return View(stadium);
         }
@@ -58,8 +76,8 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(stadium);
-                await _context.SaveChangesAsync();
+                _db.Add(stadium);
+                await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(stadium);
@@ -73,7 +91,7 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
                 return NotFound();
             }
 
-            var stadium = await _context.Stadiums.FindAsync(id);
+            var stadium = await _db.Stadiums.FindAsync(id);
             if (stadium == null)
             {
                 return NotFound();
@@ -97,8 +115,8 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
             {
                 try
                 {
-                    _context.Update(stadium);
-                    await _context.SaveChangesAsync();
+                    _db.Update(stadium);
+                    await _db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,7 +142,7 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
                 return NotFound();
             }
 
-            var stadium = await _context.Stadiums
+            var stadium = await _db.Stadiums
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (stadium == null)
             {
@@ -139,15 +157,15 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var stadium = await _context.Stadiums.FindAsync(id);
-            _context.Stadiums.Remove(stadium);
-            await _context.SaveChangesAsync();
+            var stadium = await _db.Stadiums.FindAsync(id);
+            _db.Stadiums.Remove(stadium);
+            await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool StadiumExists(int id)
         {
-            return _context.Stadiums.Any(e => e.Id == id);
+            return _db.Stadiums.Any(e => e.Id == id);
         }
     }
 }

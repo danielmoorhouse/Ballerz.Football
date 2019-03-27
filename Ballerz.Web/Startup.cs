@@ -48,6 +48,16 @@ namespace Ballerz.Football.Ballerz.Web
            .AddDefaultUI()
            .AddDefaultTokenProviders();
            services.AddScoped<ICountries, CountriesService>();
+           services.AddScoped<ICompetition, CompetitionsService>();
+           services.AddScoped<IClubs, ClubsService>();
+           services.AddScoped<IClubPersonHistory, ClubPersonHistoryService>();
+           services.AddScoped<IClubRole, ClubRoleService>();
+           services.AddScoped<IPersonImage, PersonImageService>();
+           services.AddScoped<IStadiumImage, StadiumImageService>();
+           services.AddScoped<ISeason, SeasonsService>();
+           services.AddScoped<IStadium, StadiumsService>();
+          // services.AddScoped<ICountries, CountriesService>();
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

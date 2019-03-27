@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Ballerz.Football.Ballerz.Data;
 using Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data;
+using Ballerz.Football.Ballerz.Services;
 
 namespace Ballerz.Football.Ballerz.Web.Controllers
 {
     public class ClubPersonController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IClubPerson _clubPersonService;
 
         public ClubPersonController(ApplicationDbContext context)
         {
@@ -33,14 +35,14 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
                 return NotFound();
             }
 
-            var clubPerson = await _context.ClubPeople
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (clubPerson == null)
-            {
-                return NotFound();
-            }
+            // var clubPerson = await _context
+            //     .FirstOrDefaultAsync(m => m.Id == id);
+            // if (clubPerson == null)
+            // {
+            //     return NotFound();
+            // }
 
-            return View(clubPerson);
+            return View();
         }
 
         // GET: ClubPerson/Create
