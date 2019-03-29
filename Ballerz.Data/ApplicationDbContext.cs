@@ -7,12 +7,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ballerz.Football.Ballerz.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Countries> Countries { get; set; }
         public DbSet<Continents> Continents { get; set; }
         public DbSet<Club> Clubs { get; set; }
@@ -24,5 +25,6 @@ namespace Ballerz.Football.Ballerz.Data
         public DbSet<StadiumImages> StadiumImages { get; set; }
         public DbSet<Seasons> Seasons { get; set; }
         public DbSet<Competitions> Competitions { get; set; }
+        public DbSet<CompType> CompType { get; set; }
     }
 }

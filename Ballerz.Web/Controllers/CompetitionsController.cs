@@ -7,16 +7,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Ballerz.Football.Ballerz.Data;
 using Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data;
+using Ballerz.Football.Ballerz.Web.Models.Competitions;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Ballerz.Football.Ballerz.Services;
 
 namespace Ballerz.Football.Ballerz.Web.Controllers
 {
     public class CompetitionsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ICompetition _competitionService;
 
-        public CompetitionsController(ApplicationDbContext context)
+        public CompetitionsController(ApplicationDbContext context, ICompetition competitionService)
         {
             _context = context;
+            _competitionService = competitionService;
         }
 
         // GET: Competitions
@@ -28,25 +34,25 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
         // GET: Competitions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+          
 
-            var competitions = await _context.Competitions
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (competitions == null)
-            {
-                return NotFound();
-            }
-
-            return View(competitions);
+            return View();
         }
 
         // GET: Competitions/Create
         public IActionResult Create()
         {
-            return View();
+            var model = new AddCompetitionModel();
+                   var countries = _context.Countries.OrderBy(c => c.CountryName)
+                                        .Select(x => new { Id = x.Id, Value = x.CountryName});
+                                        model.CountryList = new SelectList(countries, "Id", "Value");
+
+                   var compType = _context.CompType.OrderBy(c => c.CompetitionType)                     
+                                        .Select(x => new { Id = x.Id, Value = x.CompetitionType});
+            model.CompTypeList = new SelectList(compType, "Id", "Value");
+
+
+            return View(model);
         }
 
         // POST: Competitions/Create
@@ -54,15 +60,28 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CountryId,CompTypeId,CompName,CompImgUrl")] Competitions competitions)
+        public async Task<IActionResult> AddCompetition(AddCompetitionModel model, IFormCollection compImage)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(competitions);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+             string storePath = "/images/comp_images/";
+            var path = Path.Combine(
+                     Directory.GetCurrentDirectory(), "wwwroot", "images", "comp_images",
+                     compImage.Files[0].FileName);
+            using (var stream = new FileStream(path, FileMode.Create))
+           {
+               await compImage.Files[0].CopyToAsync(stream); 
             }
-            return View(competitions);
+            var competition = new Competitions
+            {
+                CountryId = model.CountryId,
+                CompTypeId = model.CompTypeId,
+                CompName = model.CompName,
+                CompImgUrl = storePath + model.CompImg1.FileName
+            };
+            await _competitionService.Create(competition);
+            
+            return RedirectToAction("Index" , "Competitions");
+         
+            
         }
 
         // GET: Competitions/Edit/5

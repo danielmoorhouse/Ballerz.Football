@@ -1,8 +1,8 @@
-@model Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data.Competitions
+@model Ballerz.Football.Ballerz.Web.Models.Competitions.AddCompetitionModel
 
-@{
+<!-- @{
     Layout = null;
-}
+} -->
 
 <!DOCTYPE html>
 
@@ -20,13 +20,11 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CountryId" class="control-label"></label>
-                <input asp-for="CountryId" class="form-control" />
+                <label>Country Played In </label>&nbsp;<select asp-for="CountryId" asp-items="@Model.CountryList"></select>
                 <span asp-validation-for="CountryId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CompTypeId" class="control-label"></label>
-                <input asp-for="CompTypeId" class="form-control" />
+               <label>Competition Type </label>&nbsp;<select asp-for="CompTypeId" asp-items="@Model.CompTypeList"></select>
                 <span asp-validation-for="CompTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -34,11 +32,13 @@
                 <input asp-for="CompName" class="form-control" />
                 <span asp-validation-for="CompName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CompImgUrl" class="control-label"></label>
-                <input asp-for="CompImgUrl" class="form-control" />
-                <span asp-validation-for="CompImgUrl" class="text-danger"></span>
-            </div>
+             <div id="upload">
+                    <label style="">Upload Competition Image</label>
+                    <br />
+                    <label class="btn btn-default btn-file">
+                        Browse <input asp-for="CompImg1" typeof="file" style="display: none">
+                    </label>
+                </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

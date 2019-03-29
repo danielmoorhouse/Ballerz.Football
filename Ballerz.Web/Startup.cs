@@ -16,6 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Ballerz.Football.Ballerz.Services;
 using Ballerz.Football.Ballerz.Services.Service.Implementations;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace Ballerz.Football.Ballerz.Web
 {
@@ -47,6 +49,7 @@ namespace Ballerz.Football.Ballerz.Web
            .AddEntityFrameworkStores<ApplicationDbContext>()
            .AddDefaultUI()
            .AddDefaultTokenProviders();
+            services.AddScoped<SignInManager<ApplicationUser>, SignInManager<ApplicationUser>>();
            services.AddScoped<ICountries, CountriesService>();
            services.AddScoped<ICompetition, CompetitionsService>();
            services.AddScoped<IClubs, ClubsService>();
@@ -56,15 +59,37 @@ namespace Ballerz.Football.Ballerz.Web
            services.AddScoped<IStadiumImage, StadiumImageService>();
            services.AddScoped<ISeason, SeasonsService>();
            services.AddScoped<IStadium, StadiumsService>();
+           services.AddScoped<IUser, UserService>();
+           
           // services.AddScoped<ICountries, CountriesService>();
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                   services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                  .AddRazorPagesOptions(options =>
+        {
+            options.AllowAreas = true;
+            options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+            options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+        });
+               services.ConfigureApplicationCookie(options =>
+       {
+           options.LoginPath = $"/Identity/Account/Login";
+           options.LogoutPath = $"/Identity/Account/Logout";
+           options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+       });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationDbContext context,
+                        RoleManager<ApplicationRole> roleManager, UserManager<ApplicationUser> userManager)
         {
+               var supportedCultures = new[] { new CultureInfo("en-GB") };
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en-GB"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

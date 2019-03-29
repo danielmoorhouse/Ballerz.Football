@@ -1,4 +1,4 @@
-@model IEnumerable<Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data.Competitions>
+@model IEnumerable<Ballerz.Football.Ballerz.Web.Models.Competitions.CompetitionListingModel>
 
 @{
     Layout = null;
@@ -19,16 +19,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CountryId)
+             
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CompTypeId)
+               
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CompName)
+                
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CompImgUrl)
+               
             </th>
             <th></th>
         </tr>
@@ -37,16 +37,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CountryId)
+                @item.CountryId
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CompTypeId)
+                @item.CompTypeId
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CompName)
+                @item.CompName
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CompImgUrl)
+                @item.CompImgUrl
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
