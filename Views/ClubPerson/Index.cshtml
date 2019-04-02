@@ -1,8 +1,5 @@
-@model IEnumerable<Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data.ClubPerson>
+@model Ballerz.Football.Ballerz.Web.Models.ClubPerson.ClubPersonIndexModel
 
-@{
-    Layout = null;
-}
 
 <!DOCTYPE html>
 
@@ -15,53 +12,27 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.From)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CountryId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClubId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClubRoleId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.From)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CountryId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClubId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClubRoleId)
-            </td>
-            <td>
+<div class="row">
+@foreach (var item in Model.CPList) {
+      <div class="col-md-3 text-center">
+          <img src="@item.PlayerImageUrl" style="width: 80%" />
+               <h5><strong>@item.FirstName @item.LastName</strong></h5> 
+         
+              <p><strong>@item.ClubName</strong></p>   
+           
+              <p><strong>@item.CountryName</strong></p>    
+           
+               <p><strong>@item.ClubRoleName</strong></p>   
+         
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+            </div>
+            <!-- <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+            </td> -->
+    
 }
-    </tbody>
-</table>
+   </div>
 </body>
 </html>

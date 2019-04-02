@@ -1,0 +1,35 @@
+@model Ballerz.Football.Ballerz.Web.Models.Competitions.CompetitionIndexModel
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="row">
+@foreach (var item in Model.CompList) 
+{
+       <div class="col-md-3 text center">
+               
+            <img src="@item.CompImgUrl" style="width: 60%;" />
+               
+           
+                <h5><strong>@item.CompName</strong></h5>  <br/>
+           
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </div>
+       
+}
+   
+</div>
+</body>
+</html>

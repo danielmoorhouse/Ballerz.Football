@@ -121,3 +121,5 @@
 /home/daniel/ASPProjects/Ballerz.Football/obj/Debug/netcoreapp2.2/Razor/Views/_ViewStart.g.cshtml.cs
 /home/daniel/ASPProjects/Ballerz.Football/obj/Debug/netcoreapp2.2/Razor/Views/Countries/Create.g.cshtml.cs
 /home/daniel/ASPProjects/Ballerz.Football/obj/Debug/netcoreapp2.2/Razor/Views/Countries/Index.g.cshtml.cs
+/home/daniel/ASPProjects/Ballerz.Football/obj/Debug/netcoreapp2.2/Razor/Views/Competitions/CountryComp.g.cshtml.cs
+/home/daniel/ASPProjects/Ballerz.Football/obj/Debug/netcoreapp2.2/Razor/Views/Countries/ContCountries.g.cshtml.cs

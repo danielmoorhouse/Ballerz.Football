@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Ballerz.Football.Ballerz.Web.Models.Clubs
 {
@@ -12,7 +13,9 @@ namespace Ballerz.Football.Ballerz.Web.Models.Clubs
         public string AverageAttendance { get; set; }
         public string SocialFollowing { get; set; }
         public string ClubValue { get; set; }
+        public string PageTheme { get; set; }
+        public string PageTheme2 { get; set; }
         public int LeagueId { get; set; }
-        public string LeagueName { get; set; }
+        public SelectList LeagueList { get; set; }
     }
 }

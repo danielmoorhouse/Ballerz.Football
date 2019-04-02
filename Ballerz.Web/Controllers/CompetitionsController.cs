@@ -26,13 +26,47 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
         }
 
         // GET: Competitions
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Competitions.ToListAsync());
+            var comps =  _competitionService.GetAll()
+            .OrderBy(c => c.CountryId)
+            .Select(l => new CompetitionListingModel
+            {
+                Id = l.Id,
+                CompTypeId = l.CompTypeId,
+                CompTypeName = _context.CompType.Where(ct => ct.Id == l.CompTypeId).FirstOrDefault().CompetitionType,
+                CompName = l.CompName,
+                CompImgUrl = l.CompImgUrl
+
+            });
+            var model = new CompetitionIndexModel
+            {
+                CompList = comps
+            };
+            return View(model);
+        }
+         public IActionResult CountryComp(int id)
+           {
+            var comps =  _competitionService.GetAll().Where(c => c.CountryId == id)
+            .OrderBy(c => c.CompName)
+            .Select(l => new CompetitionListingModel
+            {
+                Id = l.Id,
+                CompTypeId = l.CompTypeId,
+                CompTypeName = _context.CompType.Where(ct => ct.Id == l.CompTypeId).FirstOrDefault().CompetitionType,
+                CompName = l.CompName,
+                CompImgUrl = l.CompImgUrl
+
+            });
+            var model = new CompetitionIndexModel
+            {
+                CompList = comps
+            };
+            return View(model);
         }
 
         // GET: Competitions/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
           
 

@@ -5,6 +5,7 @@ namespace Ballerz.Football.Ballerz.Web.Models.Clubs
         public int Id { get; set; }
         public string ClubName { get; set; }
         public string TeamBadgeUrl { get; set; }
-        public string CountryFlagUrl { get; set; }
+        public string LeagueName { get; set; }
+        
     }
 }

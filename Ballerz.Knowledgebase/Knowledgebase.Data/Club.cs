@@ -10,8 +10,10 @@ namespace Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data
         public string AverageAttendance { get; set; }
         public string SocialFollowing { get; set; }
         public string ClubValue { get; set; }
+        public string PageTheme { get; set; }
+        public string PageTheme2 { get; set; }
         public int LeagueId { get; set; }
-        public string LeagueName { get; set; }
+       
 
     }
 }

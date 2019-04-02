@@ -20,9 +20,13 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
         }
 
         // GET: Continents
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Continents.ToListAsync());
+            var model =  _context.Continents
+                        .OrderBy(c => c.Id)
+                        .ToList();
+            ViewBag.ContinentName = _context.Continents.Where(c => c.Id == c.Id).FirstOrDefault().ContinentName;
+            return View(model);
         }
 
         // GET: Continents/Details/5

@@ -1,8 +1,6 @@
-@model IEnumerable<Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data.Stadium>
+@model Ballerz.Football.Ballerz.Web.Models.Stadiums.StadiumIndexModel
 
-@{
-    Layout = null;
-}
+
 
 <!DOCTYPE html>
 
@@ -15,71 +13,26 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.StadiumName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StadiumImageUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CountryId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HomeTeamId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Capacity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PostCode)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.StadiumName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StadiumImageUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CountryId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HomeTeamId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Capacity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostCode)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+<div class="row">
+@foreach (var item in Model.StadList) {
+    <div class="col-md-3 text-center">
+                <p style="display: none;">@item.Id</p>
+               
+          
+                
+           <img src="@item.StadiumImageUrl" style="width: 90%; border-radius: 25px;" />
+           <h5><strong>@item.StadiumName</strong></h5> 
+         
+            
+               <img src="@item.ClubBadgeUrl" style="width: 25%" /> 
+         
+         
+         
+                <!-- <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> -->
+                </div>
+    }
+</div>
 </body>
 </html>

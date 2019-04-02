@@ -1,8 +1,6 @@
-@model IEnumerable<Ballerz.Football.Ballerz.Web.Models.Competitions.CompetitionListingModel>
+@model Ballerz.Football.Ballerz.Web.Models.Competitions.CompetitionIndexModel
 
-@{
-    Layout = null;
-}
+
 
 <!DOCTYPE html>
 
@@ -15,47 +13,23 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-             
-            </th>
-            <th>
+<div class="row">
+@foreach (var item in Model.CompList) 
+{
+       <div class="col-md-3 text center">
                
-            </th>
-            <th>
-                
-            </th>
-            <th>
+            <img src="@item.CompImgUrl" style="width: 60%;" />
                
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @item.CountryId
-            </td>
-            <td>
-                @item.CompTypeId
-            </td>
-            <td>
-                @item.CompName
-            </td>
-            <td>
-                @item.CompImgUrl
-            </td>
-            <td>
+           
+                <h5><strong>@item.CompName</strong></h5>  <br/>
+           
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+                </div>
+       
 }
-    </tbody>
-</table>
+   
+</div>
 </body>
 </html>

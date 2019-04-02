@@ -1,8 +1,6 @@
-@model Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data.Stadium
+@model Ballerz.Football.Ballerz.Web.Models.Stadiums.AddStadiumModel
 
-@{
-    Layout = null;
-}
+
 
 <!DOCTYPE html>
 
@@ -17,7 +15,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="AddStadium" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="StadiumName" class="control-label"></label>
@@ -25,20 +23,24 @@
                 <span asp-validation-for="StadiumName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StadiumImageUrl" class="control-label"></label>
-                <input asp-for="StadiumImageUrl" class="form-control" />
-                <span asp-validation-for="StadiumImageUrl" class="text-danger"></span>
+                 <label>Upload Stadium Image</label>
+                    <br />
+                    <label class="btn btn-default btn-file">
+                        Browse <input asp-for="StadiumImage" typeof="file" style="display: none">
+                    </label>
             </div>
-            <div class="form-group">
-                <label asp-for="CountryId" class="control-label"></label>
-                <input asp-for="CountryId" class="form-control" />
-                <span asp-validation-for="CountryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HomeTeamId" class="control-label"></label>
-                <input asp-for="HomeTeamId" class="form-control" />
-                <span asp-validation-for="HomeTeamId" class="text-danger"></span>
-            </div>
+                            <div class="form-group">
+                   
+                    <div class="col-md-10">
+                        <label>Resides In </label>&nbsp;<select asp-for="CountryId" asp-items="@Model.CountryList"></select>
+                    </div>
+                </div>
+                           <div class="form-group">
+                   
+                    <div class="col-md-10">
+                        <label>Home Team </label>&nbsp;<select asp-for="ClubId" asp-items="@Model.ClubList"></select>
+                    </div>
+                </div>
             <div class="form-group">
                 <label asp-for="Capacity" class="control-label"></label>
                 <input asp-for="Capacity" class="form-control" />

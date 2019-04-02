@@ -105,7 +105,9 @@ namespace Ballerz.Football.Migrations
 
                     b.Property<int>("LeagueId");
 
-                    b.Property<string>("LeagueName");
+                    b.Property<string>("PageTheme");
+
+                    b.Property<string>("PageTheme2");
 
                     b.Property<string>("SocialFollowing");
 
@@ -131,9 +133,17 @@ namespace Ballerz.Football.Migrations
 
                     b.Property<int>("CountryId");
 
+                    b.Property<DateTime>("DoB");
+
+                    b.Property<string>("FirstName");
+
                     b.Property<string>("From");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("LastName");
+
+                    b.Property<string>("PlayerImageUrl");
+
+                    b.Property<string>("Value");
 
                     b.HasKey("Id");
 
@@ -230,6 +240,8 @@ namespace Ballerz.Football.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ContinentImageUrl");
 
                     b.Property<string>("ContinentName");
 

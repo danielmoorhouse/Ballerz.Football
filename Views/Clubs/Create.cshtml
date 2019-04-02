@@ -1,4 +1,4 @@
-@model Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data.Club
+@model Ballerz.Football.Ballerz.Web.Models.Clubs.AddClubModel
 
 
 
@@ -10,31 +10,27 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="AddClub" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ClubName" class="control-label"></label>
                 <input asp-for="ClubName" class="form-control" />
                 <span asp-validation-for="ClubName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="TeamBadgeUrl" class="control-label"></label>
-                <input asp-for="TeamBadgeUrl" class="form-control" />
-                <span asp-validation-for="TeamBadgeUrl" class="text-danger"></span>
-            </div>
+       
             <div class="form-group">
                 <label asp-for="YearFounded" class="control-label"></label>
                 <input asp-for="YearFounded" class="form-control" />
                 <span asp-validation-for="YearFounded" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="WorldwideFans" class="control-label"></label>
-                <input asp-for="WorldwideFans" class="form-control" />
+               
+                <input asp-for="WorldwideFans" class="form-control" placeholder="Worldwide Fans" />
                 <span asp-validation-for="WorldwideFans" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AverageAttendance" class="control-label"></label>
-                <input asp-for="AverageAttendance" class="form-control" />
+                
+                <input asp-for="AverageAttendance" class="form-control" placeholder="Average Attendance" />
                 <span asp-validation-for="AverageAttendance" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -47,16 +43,17 @@
                 <input asp-for="ClubValue" class="form-control" />
                 <span asp-validation-for="ClubValue" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="LeagueId" class="control-label"></label>
-                <input asp-for="LeagueId" class="form-control" />
-                <span asp-validation-for="LeagueId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LeagueName" class="control-label"></label>
-                <input asp-for="LeagueName" class="form-control" />
-                <span asp-validation-for="LeagueName" class="text-danger"></span>
-            </div>
+             <div class="col-md-10">
+                        <label>Competes In </label>&nbsp;<select asp-for="LeagueId" asp-items="@Model.LeagueList"></select>
+                    </div>
+                            <div id="upload">
+                    <label style="">Upload Team Badge</label>
+                    <br />
+                    <label class="btn btn-default btn-file">
+                        Browse <input asp-for="ImageT1" typeof="file" style="display: none">
+                    </label>
+                </div>
+        
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

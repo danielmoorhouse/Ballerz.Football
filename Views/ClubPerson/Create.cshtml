@@ -1,8 +1,5 @@
-@model Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data.ClubPerson
+@model Ballerz.Football.Ballerz.Web.Models.ClubPerson.AddClubPersonModel
 
-@{
-    Layout = null;
-}
 
 <!DOCTYPE html>
 
@@ -17,33 +14,50 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="AddClubPerson" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
+               <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+                <div class="form-group">
+                <label asp-for="DoB" class="control-label"></label>
+                <input asp-for="DoB" class="form-control" />
+                <span asp-validation-for="DoB" class="text-danger"></span>
+            </div>
+                 <div class="form-group">
+                <label asp-for="Value" class="control-label"></label>
+                <input asp-for="Value" class="form-control" />
+                <span asp-validation-for="Value" class="text-danger"></span>
+            </div>
+        <div class="col-md-10">
+            <label>Country From </label>&nbsp;<select asp-for="CountryId" asp-items="@Model.CountryList"></select>
+        </div>
             <div class="form-group">
                 <label asp-for="From" class="control-label"></label>
                 <input asp-for="From" class="form-control" />
                 <span asp-validation-for="From" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CountryId" class="control-label"></label>
-                <input asp-for="CountryId" class="form-control" />
-                <span asp-validation-for="CountryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ClubId" class="control-label"></label>
-                <input asp-for="ClubId" class="form-control" />
-                <span asp-validation-for="ClubId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ClubRoleId" class="control-label"></label>
-                <input asp-for="ClubRoleId" class="form-control" />
-                <span asp-validation-for="ClubRoleId" class="text-danger"></span>
-            </div>
+        
+            <div class="col-md-10">
+            <label>Current Club </label>&nbsp;<select asp-for="ClubId" asp-items="@Model.ClubList"></select>
+        </div>
+              <div class="col-md-10">
+            <label>Club Role/Position </label>&nbsp;<select asp-for="ClubRoleId" asp-items="@Model.ClubRoleList"></select>
+        </div>
+           <div class="col-md-10">
+                    <label style="">Upload Player Image</label>
+                    <br />
+                    <label class="btn btn-default btn-file">
+                        Browse <input asp-for="PlayerImage" typeof="file" style="display: none">
+                    </label>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

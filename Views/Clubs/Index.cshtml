@@ -1,8 +1,6 @@
-@model IEnumerable<Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data.Club>
+@model Ballerz.Football.Ballerz.Web.Models.Clubs.ClubIndexModel
 
-@{
-    Layout = null;
-}
+
 
 <!DOCTYPE html>
 
@@ -15,77 +13,16 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ClubName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TeamBadgeUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.YearFounded)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WorldwideFans)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AverageAttendance)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SocialFollowing)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClubValue)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LeagueId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LeagueName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClubName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TeamBadgeUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.YearFounded)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WorldwideFans)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AverageAttendance)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SocialFollowing)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClubValue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LeagueId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LeagueName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+<div class="row">
+@foreach (var item in Model.ClubList) {
+     <div class="col-md-3 text-center">
+                
+           
+            <img src="@item.TeamBadgeUrl" style="width: 70%;" />   <br/> 
+          <h5><strong>@item.ClubName</strong></h5>    
+            <p><strong>@item.LeagueName</strong></p>    
+   </div>
 }
-    </tbody>
-</table>
+ </div>
 </body>
 </html>

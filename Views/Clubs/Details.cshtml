@@ -1,8 +1,5 @@
-@model Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data.Club
+@model Ballerz.Football.Ballerz.Web.Models.Clubs.ClubDetailModel
 
-@{
-    Layout = null;
-}
 
 <!DOCTYPE html>
 
@@ -11,70 +8,62 @@
     <meta name="viewport" content="width=device-width" />
     <title>Details</title>
 </head>
-<body>
+<body style="background-color: @Model.Clubs.PageTheme;">
 
-<div>
-    <h4>Club</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ClubName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ClubName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TeamBadgeUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TeamBadgeUrl)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.YearFounded)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.YearFounded)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WorldwideFans)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WorldwideFans)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AverageAttendance)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AverageAttendance)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SocialFollowing)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SocialFollowing)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ClubValue)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ClubValue)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LeagueId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LeagueId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LeagueName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LeagueName)
-        </dd>
-    </dl>
+
+  <div class="container-fluid" style="background-color: white;">
+    
+  <div class="row" >
+        <div class="col-md-3 text-center" style="padding: 1%; border-right: 1px solid lightgrey;">
+            
+        
+     
+            
+        <img src="@Model.Clubs.TeamBadgeUrl" style="width: 80%" /><br/><br/>
+        <h5><strong>@Model.Clubs.ClubName</strong></h5>
+        <img src="@Model.Competitions.CompImgUrl" style="width: 50%;" />
+          <p>Founded <br/><strong> @Model.Clubs.YearFounded</strong></p>
+        <p>Average Attendance<br/> <strong>@Model.Clubs.AverageAttendance</strong></p>
+          <p>Global Fan Base <br/><strong> @Model.Clubs.WorldwideFans </strong></p>
+
+           
+     
+         <p>S M Followers <br/><strong> @Model.Clubs.SocialFollowing</strong></p>
+     
+         <p>Club Value<br/><strong> @Model.Clubs.ClubValue</strong></p>  
+       
+            
+  </div>
+<div class="col-md-9 text-center">
+  <h2 style="color: @Model.Clubs.PageTheme; background-color: @Model.Clubs.PageTheme2; padding: 2%; margin-top: 5%;"><strong>Squad</strong></h2>
+  <hr/>
+    <div class="row">
+    @foreach(var item in Model.ClubPeople)
+    {
+    
+        <div class="col-md-3 text-center" >
+                <img src="@item.PlayerImageUrl" style="width: 70%; margin-top: 5%;" />
+       <h6><strong>@item.FirstName  @item.LastName</strong></h6> 
+       
+        @item.ClubRoleName <br/>
+        <a asp-controller="ClubPerson" asp-action="Details" asp-route-id=""
+         style="color: @Model.Clubs.PageTheme; background-color: @Model.Clubs.PageTheme2; padding: 3%;">Player Profile</a> 
+      </div>
+     
+       
+    }
+
+</div>
+</div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    @Model.Stadiums.StadiumName
+  <img src="@Model.Stadiums.StadiumImageUrl" style="width: 10%;" />
+</div>
+
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Clubs.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
 </body>

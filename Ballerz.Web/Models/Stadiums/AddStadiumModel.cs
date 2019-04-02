@@ -9,7 +9,7 @@ namespace Ballerz.Football.Ballerz.Web.Models.Stadiums
         public int CountryId { get; set; }
         public SelectList CountryList { get; set; }
         public string StadiumImageUrl { get; set; }
-        public IFormFile StadImageUpload { get; set; }
+        public IFormFile StadiumImage { get; set; }
         public int ClubId { get; set; }
         public SelectList ClubList { get; set; }
         public string Capacity { get; set; }

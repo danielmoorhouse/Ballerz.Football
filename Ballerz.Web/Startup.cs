@@ -53,6 +53,7 @@ namespace Ballerz.Football.Ballerz.Web
            services.AddScoped<ICountries, CountriesService>();
            services.AddScoped<ICompetition, CompetitionsService>();
            services.AddScoped<IClubs, ClubsService>();
+           services.AddScoped<IClubPerson, ClubPersonService>();
            services.AddScoped<IClubPersonHistory, ClubPersonHistoryService>();
            services.AddScoped<IClubRole, ClubRoleService>();
            services.AddScoped<IPersonImage, PersonImageService>();

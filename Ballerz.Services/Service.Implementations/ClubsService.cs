@@ -8,7 +8,7 @@ namespace Ballerz.Football.Ballerz.Services.Service.Implementations
 {
     public class ClubsService : IClubs
     {
-                private readonly ApplicationDbContext _db;
+        private readonly ApplicationDbContext _db;
         public ClubsService(ApplicationDbContext db)
         {
             _db = db;
