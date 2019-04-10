@@ -48,6 +48,9 @@
             <div class="col-md-10">
             <label>Current Club </label>&nbsp;<select asp-for="ClubId" asp-items="@Model.ClubList"></select>
         </div>
+            <div class="col-md-10">
+            <label>Is Captain? </label>&nbsp;<select asp-for="IsCaptain" asp-items="@Model.YesNoList"></select>
+        </div>
               <div class="col-md-10">
             <label>Club Role/Position </label>&nbsp;<select asp-for="ClubRoleId" asp-items="@Model.ClubRoleList"></select>
         </div>

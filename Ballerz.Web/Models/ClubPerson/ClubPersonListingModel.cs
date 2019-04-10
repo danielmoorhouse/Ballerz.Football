@@ -12,5 +12,6 @@ namespace Ballerz.Football.Ballerz.Web.Models.ClubPerson
         public string CountryName { get; set; }
         public int ClubRoleId { get; set; }
         public string ClubRoleName { get; set; }
+        public string IsCaptain { get; set; }
     }
 }

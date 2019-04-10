@@ -1,8 +1,5 @@
-@model Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data.ClubPersonHistory
+@model Ballerz.Football.Ballerz.Web.Models.ClubPersonHistory.AddClubPersonHistoryModel
 
-@{
-    Layout = null;
-}
 
 <!DOCTYPE html>
 
@@ -17,27 +14,36 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="AddClubPersonHistory">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ClubPersonId" class="control-label"></label>
-                <input asp-for="ClubPersonId" class="form-control" />
+            <div class="col-md-10">
+                        <label>Person: </label>&nbsp;<select asp-for="ClubPersonId" asp-items="@Model.ClubPersonList"></select>
+                    </div>
                 <span asp-validation-for="ClubPersonId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TeamName" class="control-label"></label>
-                <input asp-for="TeamName" class="form-control" />
-                <span asp-validation-for="TeamName" class="text-danger"></span>
+                 <div class="col-md-10">
+                        <label>Club: </label>&nbsp;<select asp-for="ClubName" asp-items="@Model.ClubList"></select>
+                    </div>
+                <span asp-validation-for="ClubName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Season" class="control-label"></label>
-                <input asp-for="Season" class="form-control" />
+                 <div class="col-md-10">
+                        <label>Season </label>&nbsp;<select asp-for="Season" asp-items="@Model.SeasonList"></select>
+                    </div>
                 <span asp-validation-for="Season" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LeagueName" class="control-label"></label>
-                <input asp-for="LeagueName" class="form-control" />
-                <span asp-validation-for="LeagueName" class="text-danger"></span>
+                <div class="col-md-10">
+                        <label>Competition Competed In </label>&nbsp;<select asp-for="CompName" asp-items="@Model.CompList"></select>
+                    </div>
+                <span asp-validation-for="CompName" class="text-danger"></span>
+            </div>
+                 <div class="form-group">
+                <label asp-for="Games" class="control-label"></label>
+                <input asp-for="Games" class="form-control" />
+                <span asp-validation-for="Games" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="RedCards" class="control-label"></label>

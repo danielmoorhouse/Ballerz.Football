@@ -115,7 +115,8 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
                                PlayerImageUrl = p.PlayerImageUrl,
                                FirstName = p.FirstName,
                                LastName = p.LastName,
-                               ClubRoleName = r.RoleName
+                               ClubRoleName = r.RoleName,
+                               IsCaptain = p.IsCaptain
 
                            });
                         

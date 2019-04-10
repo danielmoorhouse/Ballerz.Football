@@ -1,8 +1,5 @@
-@model Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data.Seasons
+@model Ballerz.Football.Ballerz.Web.Models.Seasons.AddSeasonModel
 
-@{
-    Layout = null;
-}
 
 <!DOCTYPE html>
 
@@ -17,7 +14,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="AddSeason">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Season" class="control-label"></label>

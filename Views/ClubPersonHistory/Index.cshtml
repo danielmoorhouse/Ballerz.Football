@@ -1,8 +1,5 @@
-@model IEnumerable<Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data.ClubPersonHistory>
+@model Ballerz.Football.Ballerz.Web.Models.ClubPersonHistory.ClubPersonHistoryIndexModel
 
-@{
-    Layout = null;
-}
 
 <!DOCTYPE html>
 
@@ -10,6 +7,11 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <style>
+        p {
+            padding-top: 10%;
+        }
+    </style>
 </head>
 <body>
 <p>
@@ -17,71 +19,70 @@
 </p>
 <table class="table">
     <thead>
-        <tr>
+        <tr class="text-center" style="background-color: grey;">
+          
             <th>
-                @Html.DisplayNameFor(model => model.ClubPersonId)
+              <p>Playing For</p>  
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TeamName)
+               <p>Season</p> 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Season)
+            <p>League Name</p>
+            </th>
+             <th>
+            <p>Appearances</p>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LeagueName)
+                 <span style="width: 50px; font-size: 25px; background-color: red; color: red;">R</span>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RedCards)
+                <span style="width: 50px; font-size: 25px; background-color: yellow; color: yellow;">Y</span>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.YellowCards)
+               <img src="/images/backgrounds/football.png" class="" style="width: 40px;" />
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Goals)
+               <p>Position</p> 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Position)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Points)
+               <p>Points</p>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClubPersonId)
+@foreach (var item in Model.ClubPersonHistoryList) {
+        <tr class="text-center" style="background-color: lightgrey;">
+           <td>
+               <strong>@item.ClubName</strong> 
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TeamName)
+               <strong> @item.Season</strong>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Season)
+               <strong> @item.CompName </strong>
+            </td>
+             <td>
+               <strong> @item.Games </strong>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LeagueName)
+               <strong>@item.RedCards</strong> 
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RedCards)
+               <strong> @item.YellowCards</strong>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.YellowCards)
+               <strong>@item.Goals</strong> 
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Goals)
+               <strong> @item.Position</strong>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Position)
+               <strong>@item.Points</strong> 
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Points)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+         
             </td>
         </tr>
 }

@@ -60,7 +60,7 @@ namespace Ballerz.Football.Ballerz.Web
            services.AddScoped<IStadiumImage, StadiumImageService>();
            services.AddScoped<ISeason, SeasonsService>();
            services.AddScoped<IStadium, StadiumsService>();
-           services.AddScoped<IUser, UserService>();
+           //services.AddScoped<IUser, UserService>();
            
           // services.AddScoped<ICountries, CountriesService>();
 

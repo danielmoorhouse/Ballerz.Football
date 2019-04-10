@@ -75,7 +75,7 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
                 
             };
             await _seasonService.Create(season);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Seasons");
     }
 
         // // GET: Seasons/Edit/5

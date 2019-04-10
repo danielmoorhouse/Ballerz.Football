@@ -1,63 +1,129 @@
-@model Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data.ClubPerson
-
-@{
-    Layout = null;
-}
-
+@model Ballerz.Football.Ballerz.Web.Models.ClubPerson.ClubPersonDetailModel
+@using Humanizer
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Details</title>
+    <style>
+    th {
+        color: white;
+    }
+    </style>
 </head>
-<body>
-
-<div>
-    <h4>ClubPerson</h4>
-    <hr />
-    <dl class="row">
-              <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
+<body style="background-color: @Model.Club.PageTheme;">
+    <div class="row">
+        <div class="col-md-3 text-center">
+      
+        </div>
+        <div class="col-md-6"></div>
+    </div>
      
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.From)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.From)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CountryId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CountryId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ClubId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ClubId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ClubRoleId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ClubRoleId)
-        </dd>
-    </dl>
+<div class="row" style="background-color: white;">
+    <div class="col-md-3 text-center" style="padding: 2%; border-right: 1px solid lightgrey;">
+                    <h2 style="background-color: @Model.Club.PageTheme; color: @Model.Club.PageTheme2; padding: 2.5%;border-radius: 25px;">
+    <strong>Player Profile</strong> </h2><hr/>
+        <img src="@Model.ClubPerson.PlayerImageUrl" style="width: 80%"> 
+      <h5><strong>@Model.ClubPerson.FirstName @Model.ClubPerson.LastName</strong></h5>  
+      <p><strong>@Model.ClubRole.RoleName</strong></p>
+      <p><strong>@Model.ClubPerson.DoB.ToShortDateString()</strong></p>
+      <p><strong>Born @Model.ClubPerson.DoB.Humanize()</strong></p>
+       <p> <strong>@Model.ClubPerson.From </strong> <br/>
+      <img src="@Model.Country.FlagUrl" style="width: 40px;" /><br/><strong>@Model.Country.CountryName</strong></p>
+      <hr/>
+      
+      <p><strong>Value: £ @Model.ClubPerson.Value.Humanize()</strong></p>
+      <hr/>
+     <img src="@Model.Club.TeamBadgeUrl" style="width: 40%"> 
+     <hr/>
+     <img src="@Model.Competition.CompImgUrl" style="width: 50%"> 
+     <hr/>
+     <a asp-controller="ClubPersonHistory" asp-action="Create" asp-route-id="@Model.ClubPerson.Id">Add Stats</a>
+      <p><strong></strong></p>
+      <p><strong></strong></p>
+      <p><strong></strong></p>
+    </div>
+    <div class="col-md-9 text-center">
+       
+         <h2 style="color: @Model.Club.PageTheme; background-color: @Model.Club.PageTheme2; padding: 1%; margin-top: 2.5%; border-radius: 25px;">
+    <strong>Seasonal Stats</strong> </h2>
+    <table class="table">
+    <thead>
+        <tr class="text-center" style="background-color: black;">
+          
+            <th>
+              <p>Club</p>  
+            </th>
+            <th>
+               <p>Season</p> 
+            </th>
+            <th>
+            <p>League</p>
+            </th>
+             <th>
+            <p>Games</p>
+            </th>
+            <th>
+                 <span style="width: 50px; font-size: 25px; background-color: red; color: red;">R</span>
+            </th>
+            <th>
+                <span style="width: 50px; font-size: 25px; background-color: yellow; color: yellow;">Y</span>
+            </th>
+            <th>
+               <img src="/images/backgrounds/football.png" class="" style="width: 40px;" />
+            </th>
+            <th>
+               <p>Psn</p> 
+            </th>
+            <th>
+               <p>Pts</p>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+      <tbody>
+@foreach (var item in Model.ClubPersonHistory) {
+        <tr class="text-center" style="background-color: lightgrey;">
+           <td>
+               <strong>@item.TeamName</strong> 
+            </td>
+            <td>
+               <strong> @item.Season</strong>
+            </td>
+            <td>
+               <strong> @item.LeagueName </strong>
+            </td>
+             <td>
+               <strong> @item.Games </strong>
+            </td>
+            <td>
+               <strong>@item.RedCards</strong> 
+            </td>
+            <td>
+               <strong> @item.YellowCards</strong>
+            </td>
+            <td>
+               <strong>@item.Goals</strong> 
+            </td>
+            <td>
+               <strong> @item.Position</strong>
+            </td>
+            <td>
+               <strong>@item.Points</strong> 
+            </td>
+            <td>
+         
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+   
+    </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    
     <a asp-action="Index">Back to List</a>
 </div>
 </body>

@@ -26,5 +26,6 @@ namespace Ballerz.Football.Ballerz.Data
         public DbSet<Seasons> Seasons { get; set; }
         public DbSet<Competitions> Competitions { get; set; }
         public DbSet<CompType> CompType { get; set; }
+         public DbSet<YesNo> YesNo { get; set; }
     }
 }

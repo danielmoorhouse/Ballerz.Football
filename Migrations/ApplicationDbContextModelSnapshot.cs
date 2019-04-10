@@ -92,6 +92,18 @@ namespace Ballerz.Football.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Ballerz.Football.Ballerz.Data.YesNo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("YesNo");
+                });
+
             modelBuilder.Entity("Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data.Club", b =>
                 {
                     b.Property<int>("Id")
@@ -139,6 +151,8 @@ namespace Ballerz.Football.Migrations
 
                     b.Property<string>("From");
 
+                    b.Property<string>("IsCaptain");
+
                     b.Property<string>("LastName");
 
                     b.Property<string>("PlayerImageUrl");
@@ -156,6 +170,8 @@ namespace Ballerz.Football.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("ClubPersonId");
+
+                    b.Property<string>("Games");
 
                     b.Property<string>("Goals");
 

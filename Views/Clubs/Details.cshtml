@@ -1,4 +1,5 @@
 @model Ballerz.Football.Ballerz.Web.Models.Clubs.ClubDetailModel
+@using Humanizer
 
 
 <!DOCTYPE html>
@@ -7,6 +8,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Details</title>
+ 
 </head>
 <body style="background-color: @Model.Clubs.PageTheme;">
 
@@ -20,35 +22,73 @@
      
             
         <img src="@Model.Clubs.TeamBadgeUrl" style="width: 80%" /><br/><br/>
-        <h5><strong>@Model.Clubs.ClubName</strong></h5>
-        <img src="@Model.Competitions.CompImgUrl" style="width: 50%;" />
+        <h5><strong>@Model.Clubs.ClubName Football Club</strong></h5>
+        <hr/>
+        <img src="@Model.Competitions.CompImgUrl" style="width: 50%;" title="@Model.Competitions.CompName"/>
+        <hr/>
+        <h5><strong>Manager</strong></h5>
+           @foreach(var item in Model.ClubPeople)
+    {
+        @if(item.ClubRoleName == "Manager")
+        {
+          
+          <p><strong>@item.FirstName  @item.LastName</strong></p> 
+          <img src="@item.PlayerImageUrl" style="width: 70%; border-radius: 25px;" />
+           <a asp-controller="ClubPerson" asp-action="Details" asp-route-id="@item.Id"
+         style="color: @Model.Clubs.PageTheme; padding: 0%; border-radius: 25px;">
+        <p><strong>Manager Profile</strong></p> 
+         </a> 
+        }
+    }
+    <hr/>
           <p>Founded <br/><strong> @Model.Clubs.YearFounded</strong></p>
-        <p>Average Attendance<br/> <strong>@Model.Clubs.AverageAttendance</strong></p>
-          <p>Global Fan Base <br/><strong> @Model.Clubs.WorldwideFans </strong></p>
+        <p>Average Attendance<br/> <strong>@Model.Clubs.AverageAttendance.Humanize()</strong></p>
+          <p>Global Fan Base <br/><strong> @Model.Clubs.WorldwideFans.Humanize() </strong></p>
 
            
      
-         <p>S M Followers <br/><strong> @Model.Clubs.SocialFollowing</strong></p>
+         <p>Social Media Followers <br/><strong> @Model.Clubs.SocialFollowing.Humanize()</strong></p>
      
-         <p>Club Value<br/><strong> @Model.Clubs.ClubValue</strong></p>  
+         <p>Club Value<br/><strong>£ @Model.Clubs.ClubValue.Humanize()</strong></p> 
+           <hr/>
+        <h5><strong>Stadium</strong></h5> 
+    <a data-toggle="modal" data-target="#myModal">
+  <img src="@Model.Stadiums.StadiumImageUrl" style="width: 80%; border-radius: 25px;" title="Click to Enlarge" />
+</a>
+   <p><strong>@Model.Stadiums.StadiumName</strong></p> 
+   <p><strong>@Model.Stadiums.Address1</strong></p> 
+   <p><strong>@Model.Stadiums.Address2</strong></p> 
+   <p><strong>@Model.Stadiums.PostCode</strong></p> 
+   <p>Capacity: <strong>@Model.Stadiums.Capacity.Humanize()</strong></p> 
        
             
   </div>
 <div class="col-md-9 text-center">
-  <h2 style="color: @Model.Clubs.PageTheme; background-color: @Model.Clubs.PageTheme2; padding: 2%; margin-top: 5%;"><strong>Squad</strong></h2>
+  <h2 style="color: @Model.Clubs.PageTheme; background-color: @Model.Clubs.PageTheme2; padding: 2%; margin-top: 5%; border-radius: 25px;">
+    <strong>Squad</strong>
+    </h2>
   <hr/>
     <div class="row">
     @foreach(var item in Model.ClubPeople)
     {
-    
-        <div class="col-md-3 text-center" >
+        @if(item.ClubRoleName != "Manager")
+        {
+        <div class="col-md-3 text-center" style="margin-bottom: 3%; border-right: 1px solid lightgrey; border-bottom: 1px solid lightgrey;">
                 <img src="@item.PlayerImageUrl" style="width: 70%; margin-top: 5%;" />
-       <h6><strong>@item.FirstName  @item.LastName</strong></h6> 
-       
-        @item.ClubRoleName <br/>
-        <a asp-controller="ClubPerson" asp-action="Details" asp-route-id=""
-         style="color: @Model.Clubs.PageTheme; background-color: @Model.Clubs.PageTheme2; padding: 3%;">Player Profile</a> 
+                <!-- @item.Id -->
+       <h6><strong>@item.FirstName  @item.LastName</strong> </h6> 
+       @if(item.IsCaptain != "No")
+          {
+            <p style="background-color: black; color: white; border-radius: 25px;"><strong>Captain</strong></p>
+          }
+       <p><strong>@item.ClubRoleName</strong></p> 
+        <a asp-controller="ClubPerson" asp-action="Details" asp-route-id="@item.Id"
+         style="color: @Model.Clubs.PageTheme; padding: 0%; border-radius: 25px;">
+        <p><strong>Player Profile</strong></p> 
+         </a> 
       </div>
+      
+        }
      
        
     }
@@ -57,14 +97,34 @@
 </div>
 </div>
 <div>
-    @Model.Stadiums.StadiumName
-  <img src="@Model.Stadiums.StadiumImageUrl" style="width: 10%;" />
+    
 </div>
 
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Clubs.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: @Model.Clubs.PageTheme;">
+        
+        <h3 class="modal-title" style="color: @Model.Clubs.PageTheme2;"><strong>@Model.Clubs.ClubName Football Club - @Model.Stadiums.StadiumName</strong></h3>
+      </div>
+      <div class="modal-body"  style="background-color: @Model.Clubs.PageTheme2;">
+        <img src="@Model.Stadiums.StadiumImageUrl" style="width: 100%; border-radius: 25px;" />
+      </div>
+      <div class="modal-footer" style="background-color: @Model.Clubs.PageTheme">
+        <button type="button" class="btn btn-default" data-dismiss="modal"
+        style="background-color: @Model.Clubs.PageTheme2; color: @Model.Clubs.PageTheme">Close</button>
+      </div>
+    </div>
+
+  </div>
 </div>
 </body>
 </html>

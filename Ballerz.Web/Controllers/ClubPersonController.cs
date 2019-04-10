@@ -18,18 +18,22 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IClubPerson _clubPersonService;
+         private readonly IClubPersonHistory _clubPersonHistoryService;
         private readonly IClubs _clubsService;
         private readonly IClubRole _clubRolesService;
         private readonly ICountries _countriesService;
+        private readonly ICompetition _competitionService;
 
         public ClubPersonController(ApplicationDbContext context, IClubPerson clubPersonService,
-                IClubs clubsService, IClubRole clubRolesService, ICountries countriesService)
+                IClubs clubsService, IClubRole clubRolesService, ICountries countriesService, ICompetition competitionService, IClubPersonHistory clubPersonHistoryService)
         {
             _context = context;
             _clubPersonService = clubPersonService;
             _clubsService = clubsService;
             _clubRolesService = clubRolesService;
             _countriesService = countriesService;
+            _competitionService = competitionService;
+            _clubPersonHistoryService = clubPersonHistoryService;
         }
 
         // GET: ClubPerson
@@ -48,7 +52,8 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
                 CountryId = c.CountryId,
                 CountryName = _countriesService.GetAll().Where(l => l.Id == c.CountryId).FirstOrDefault().CountryName,
                 ClubRoleId = c.ClubRoleId,
-                ClubRoleName = _clubRolesService.GetAll().Where(r => r.Id == c.ClubRoleId).FirstOrDefault().RoleName
+                ClubRoleName = _clubRolesService.GetAll().Where(r => r.Id == c.ClubRoleId).FirstOrDefault().RoleName,
+                IsCaptain = c.IsCaptain
             });
             var model = new ClubPersonIndexModel
             {
@@ -60,9 +65,32 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
         // GET: ClubPerson/Details/5
         public IActionResult Details(int? id)
         {
-     
+            var person = _clubPersonService.GetAll()
+                        .Where(cp => cp.Id == id).FirstOrDefault();
+            var club = _clubsService.GetAll()
+                        .Where(c => c.Id == person.ClubId).FirstOrDefault();
+            var comp = _competitionService.GetAll()
+                        .Where(ct => ct.Id == club.LeagueId).FirstOrDefault();    
+            var history = _clubPersonHistoryService.GetAll()
+                        .Where(cph => cph.ClubPersonId == id)
+                        .OrderByDescending(s => s.Season)
+                        .ToList();
+            var country = _countriesService.GetAll()
+                        .Where(c => c.Id == person.CountryId).FirstOrDefault();
+            var role = _clubRolesService.GetAll()
+                        .Where(cr => cr.Id == person.ClubRoleId).FirstOrDefault();
 
-            return View();
+            var model = new ClubPersonDetailModel
+            {
+                ClubPerson = person,
+                Club = club,
+                Competition = comp,
+                ClubPersonHistory = history,
+                Country = country,
+                ClubRole = role
+            };            
+
+            return View(model);
         }
 
         // GET: ClubPerson/Create
@@ -82,7 +110,12 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
             var countries = _countriesService.GetAll()
                         .OrderBy(c => c.ContinentId)
                         .Select(x => new {Id = x.Id, Value = x.CountryName});
-            model.CountryList = new SelectList(countries, "Id", "Value");          
+            model.CountryList = new SelectList(countries, "Id", "Value");   
+                  
+            var captain = _context.YesNo.OrderByDescending(c => c.Name)
+                                      .Select(x => new { Id = x.Id, Value = x.Name });
+
+            model.YesNoList = new SelectList(captain, "Value", "Value");       
 
             return View(model);
         }
@@ -113,7 +146,8 @@ namespace Ballerz.Football.Ballerz.Web.Controllers
                 Value = model.Value,
                 CountryId = model.CountryId,
                 ClubId = model.ClubId,
-                ClubRoleId = model.ClubRoleId
+                ClubRoleId = model.ClubRoleId,
+                IsCaptain = model.IsCaptain
             };
             await _clubPersonService.Create(clubPerson);
             return RedirectToAction("Index", "ClubPerson");

@@ -10,7 +10,7 @@ namespace Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data
         public string Season { get; set; }
         
         public string LeagueName { get; set; }
-        
+        public string Games { get; set; }
         public string RedCards { get; set; }
         public string YellowCards { get; set; }
         public string Goals { get; set; }

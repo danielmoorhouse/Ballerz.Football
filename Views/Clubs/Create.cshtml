@@ -43,6 +43,16 @@
                 <input asp-for="ClubValue" class="form-control" />
                 <span asp-validation-for="ClubValue" class="text-danger"></span>
             </div>
+               <div class="form-group">
+                <label asp-for="PageTheme" class="control-label"></label>
+                <input asp-for="PageTheme" class="form-control" />
+                <span asp-validation-for="PageTheme" class="text-danger"></span>
+            </div>
+            <div class="form-group"></div>
+               <label asp-for="PageTheme2" class="control-label"></label>
+                <input asp-for="PageTheme2" class="form-control" />
+                <span asp-validation-for="PageTheme2" class="text-danger"></span>
+            </div>
              <div class="col-md-10">
                         <label>Competes In </label>&nbsp;<select asp-for="LeagueId" asp-items="@Model.LeagueList"></select>
                     </div>

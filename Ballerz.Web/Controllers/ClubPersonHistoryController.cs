@@ -7,147 +7,95 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Ballerz.Football.Ballerz.Data;
 using Ballerz.Football.Ballerz.Knowledgebase.Knowledgebase.Data;
+using Ballerz.Football.Ballerz.Services;
+using Ballerz.Football.Ballerz.Web.Models.ClubPersonHistory;
 
 namespace Ballerz.Football.Ballerz.Web.Controllers
 {
     public class ClubPersonHistoryController : Controller
     {
-        private readonly ApplicationDbContext _context;
+             private readonly IClubPersonHistory _playerHistoryService;
+        private readonly IClubPerson _playerService;
+        private readonly IClubs _teamService;
 
-        public ClubPersonHistoryController(ApplicationDbContext context)
+        private readonly ApplicationDbContext _db;
+
+        public ClubPersonHistoryController(IClubPersonHistory playerHistoryService, ISeason seasonService,
+         ApplicationDbContext db, IClubPerson playerService, IClubs teamService)
         {
-            _context = context;
+            _playerHistoryService = playerHistoryService;
+            _db = db;
+            _playerService = playerService;
+            _teamService = teamService;
         }
 
-        // GET: ClubPersonHistory
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int id)
         {
-            return View(await _context.ClubPersonHistory.ToListAsync());
-        }
-
-        // GET: ClubPersonHistory/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
+           
+            var history = (from playerHistory in _db.ClubPersonHistory
+                        .Where(h => h.ClubPersonId == id)
+                        .OrderBy(s => s.Season)
+                        join Player in _db.ClubPeople on playerHistory.ClubPersonId equals Player.Id
+                              select new ClubPersonHistoryListingModel
+                             {
+                                ClubPersonId = playerHistory.ClubPersonId,
+                                 ClubPersonName = Player.FirstName + Player.LastName,
+                                 ClubName = playerHistory.TeamName,
+                                 Season = playerHistory.Season,
+                                 CompName = playerHistory.LeagueName,
+                                 Games = playerHistory.Games,
+                                 RedCards = playerHistory.RedCards,
+                                 YellowCards = playerHistory.YellowCards,
+                                 Goals = playerHistory.Goals,
+                                 Position = playerHistory.Position,
+                                 Points = playerHistory.Points
+                             });
+            var model = new ClubPersonHistoryIndexModel
             {
-                return NotFound();
-            }
+                ClubPersonHistoryList = history
+            };
+                             
+            return View(model);
 
-            var clubPersonHistory = await _context.ClubPersonHistory
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (clubPersonHistory == null)
-            {
-                return NotFound();
-            }
-
-            return View(clubPersonHistory);
         }
-
-        // GET: ClubPersonHistory/Create
         public IActionResult Create()
         {
-            return View();
+            var model = new AddClubPersonHistoryModel();
+            var players = _db.ClubPeople.OrderBy(p => p.ClubId)
+                                         .Select(x => new { Id = x.Id, Value = x.FirstName + x.LastName});
+            model.ClubPersonList = new SelectList(players, "Id", "Value");
+            var leagues = _db.Competitions.OrderBy(c => c.CompName)
+                                       .Select(x => new { Id = x.Id, Value = x.CompName });
+            model.CompList = new SelectList(leagues, "Value", "Value");
+            var season = _db.Seasons.OrderBy(s => s.Season)
+                                         .Select(x => new { Id = x.Id, Value = x.Season });
+            model.SeasonList = new SelectList(season, "Value", "Value");
+            var team = _db.Clubs.OrderBy(s => s.ClubName)
+                           .Select(x => new { Id = x.Id, Value = x.ClubName });
+            model.ClubList = new SelectList(team, "Value", "Value");
+
+            return View(model);
         }
-
-        // POST: ClubPersonHistory/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ClubPersonId,TeamName,Season,LeagueName,RedCards,YellowCards,Goals,Position,Points")] ClubPersonHistory clubPersonHistory)
+        public async Task<IActionResult> AddClubPersonHistory(AddClubPersonHistoryModel model)
         {
-            if (ModelState.IsValid)
+            var history = new ClubPersonHistory
             {
-                _context.Add(clubPersonHistory);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(clubPersonHistory);
-        }
 
-        // GET: ClubPersonHistory/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+                ClubPersonId = model.ClubPersonId,
+                TeamName = model.ClubName,
+                Season = model.Season,
+                LeagueName = model.CompName,
+                Games = model.Games,
+                RedCards = model.RedCards,
+                YellowCards = model.YellowCards,
+                Goals = model.Goals,
+                Position = model.Position,
+                Points = model.Points
 
-            var clubPersonHistory = await _context.ClubPersonHistory.FindAsync(id);
-            if (clubPersonHistory == null)
-            {
-                return NotFound();
-            }
-            return View(clubPersonHistory);
-        }
 
-        // POST: ClubPersonHistory/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ClubPersonId,TeamName,Season,LeagueName,RedCards,YellowCards,Goals,Position,Points")] ClubPersonHistory clubPersonHistory)
-        {
-            if (id != clubPersonHistory.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(clubPersonHistory);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ClubPersonHistoryExists(clubPersonHistory.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(clubPersonHistory);
-        }
-
-        // GET: ClubPersonHistory/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var clubPersonHistory = await _context.ClubPersonHistory
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (clubPersonHistory == null)
-            {
-                return NotFound();
-            }
-
-            return View(clubPersonHistory);
-        }
-
-        // POST: ClubPersonHistory/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var clubPersonHistory = await _context.ClubPersonHistory.FindAsync(id);
-            _context.ClubPersonHistory.Remove(clubPersonHistory);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool ClubPersonHistoryExists(int id)
-        {
-            return _context.ClubPersonHistory.Any(e => e.Id == id);
+            };
+            await _playerHistoryService.Create(history);
+            return RedirectToAction("Index", "ClubPersonHistory");
         }
     }
 }

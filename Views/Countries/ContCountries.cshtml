@@ -1,14 +1,16 @@
 @model Ballerz.Football.Ballerz.Web.Models.Countries.CountryIndexModel
 
 <div class="container-fluid">
-  <h2>Countries in @ViewBag.ContinentName</h2>
+  <h2><strong>Countries in @ViewBag.ContinentName</strong> </h2>
+  <hr/>
 <div class="row">
 @foreach(var country in Model.CountriesList)
 {
-    <div class="col-md-3 text-center" style="margin-bottom: 3em; border-bottom: 1px solid white;" >
+    <div class="col-md-3 text-center" style="margin-bottom: 3em; border-bottom: 0.5px solid lightgrey; 
+     border-left: 0.25px solid lightgrey; border-right: 0.25px solid lightgrey; border-top: 0.5px solid lightgrey;" >
   <img src="@country.FlagUrl" class="flagImg" style="width: 70%; height: 125px; padding-top: 20px; padding-bottom: 20px;" />
   
-  <h2 style="padding-bottom: 10px; color: black;"><strong>@country.Name</strong></h2>
+  <h5 style="padding-bottom: 10px; color: black;"><strong>@country.Name</strong></h5>
  
     </div>
   
